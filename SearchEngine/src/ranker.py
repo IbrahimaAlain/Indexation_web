@@ -11,6 +11,7 @@ class Ranker:
         }
 
     def compute_linear_score(self, query_tokens, url, title_hits, desc_hits, review_data):
+        """Calcule le score de pertinence d'un document en combinant les correspondances (titre, description) et les avis."""
         score = 0.0
 
         if url in title_hits:

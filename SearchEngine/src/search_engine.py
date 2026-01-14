@@ -14,11 +14,10 @@ class SearchEngine:
         self._load_data()
 
     def _load_data(self):
-        # [cite_start]Chargement des synonymes (origin_synonyms.json) [cite: 11]
+        """Charge en mémoire les synonymes, les fichiers d'index et la base de produits."""
         syn_path = os.path.join(self.input_dir, "origin_synonyms.json")
         self.synonyms = load_synonyms(syn_path)
 
-        # [cite_start]Chargement des index [cite: 6]
         index_files = [
             "title_index.json", "description_index.json", 
             "review_index.json", "brand_index.json", "origin_index.json"
@@ -31,7 +30,6 @@ class SearchEngine:
                     key = filename.replace(".json", "")
                     self.indexes[key] = json.load(f)
 
-        # [cite_start]Chargement des produits pour l'affichage (rearranged_products.jsonl) [cite: 49-53]
         if os.path.exists(self.products_file):
             with open(self.products_file, 'r', encoding='utf-8') as f:
                 for line in f:
@@ -70,12 +68,11 @@ class SearchEngine:
             return set.union(*candidate_docs)
 
     def search(self, query):
-        # [cite_start]1. Normalisation et synonymes [cite: 20-21]
+        """Effectue une recherche sur la base de produits et retourne les résultats classés."""
         tokens = normalize_query(query, self.synonyms)
         if not tokens:
             return {"metadata": {"count": 0}, "results": []}
 
-        # [cite_start]2. Filtrage [cite: 22-24]
         matching_urls = self.filter_documents(tokens, strict=False)
         scored_results = []
         
@@ -83,9 +80,7 @@ class SearchEngine:
         desc_idx = self.indexes.get("description_index", {})
         review_idx = self.indexes.get("review_index", {})
 
-        # [cite_start]3. Ranking [cite: 33-39]
         for url in matching_urls:
-            # Récupération des positions pour le scoring
             t_hits = {}
             d_hits = {}
             for token in tokens:
