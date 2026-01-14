@@ -2,7 +2,7 @@
 
 Ce projet finalise le moteur de recherche en exploitant les index construits précédemment. Il permet d'interroger la base de produits avec une gestion des synonymes et un algorithme de ranking pondéré.
 
-## 🚀 Fonctionnalités Implémentées
+##  Fonctionnalités Implémentées
 
 ### 1. Traitement de la requête (NLP)
 * **Tokenization & Nettoyage :** Utilisation de `NLTK` pour retirer les stopwords (mots vides) et la ponctuation.
@@ -24,7 +24,7 @@ Nous avons choisi une approche de scoring linéaire combinant plusieurs signaux 
 ### 3. Filtrage Booléen
 Le moteur utilise une logique **OR (Union)** par défaut : un document est retenu s'il contient *au moins un* des mots de la requête (ou leurs synonymes). Cela maximise le nombre de résultats ("Recall").
 
-## 🛠️ Installation et Exécution
+##  Installation et Exécution
 
 1.  **Prérequis :**
     * Les fichiers d'index (`title_index.json`, etc.) doivent être dans le dossier `input/`.
@@ -39,7 +39,7 @@ Le moteur utilise une logique **OR (Union)** par défaut : un document est reten
 3.  **Résultats :**
     Les résultats de la dernière recherche sont sauvegardés dans `output/search_results.json` au format demandé (Titre, URL, Description, Score).
 
-## 🧪 Exemple de test
+##  Exemple de test
 **Requête :** "US Bag"
 1.  Le moteur étend la requête à : *{"us", "usa", "america", "bag", "pouch", "sack"}*.
 2.  Il filtre les documents contenant l'un de ces termes.
